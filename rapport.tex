@@ -1,0 +1,59 @@
+\documentclass{article}
+
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+
+\lstset{
+    language=C++,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=5,
+    firstnumber=1,
+    frame=lines,
+    emph={vec2, vec3, vec4, mat3, mat4, uint, in, out, inout, uniform, sampler2D, sampler3D},
+    emphstyle=\bf
+}
+
+\begin{document}
+    
+
+\title{Implémentation d'un {raytracer} temps réel en GLSL}
+\author{Nathan Roth, encadré par M. THERY Sylvain et M. GUEHL Pascal}
+\maketitle
+
+\section{Introduction}
+
+De nos jours les jeux vidéos atteingnent une qualité visuelle très convainquantes. Cependant, elle n'atteint pas celle d'une application comme Blender. La raison de cette différence réside dans le type de moteur utilisé pour générer l'image à l'écran. Si Blender utilise un moteur de type raytracing, permettant une simulation réaliste de la lumière et une une très haute qualité visuelle, une seule image a besoin d'un temps de calcul de l'ordre de la dizaine de minute, voir de l'heure [ref]. Ce temps de calcul est impensable pour un jeu vidéo qui se doit d'afficher au minimum 60 images par secondes pour être considéré comme "fluide". Ces derniers doivent utiliser des technologies orientées performance.\\
+Cette contrainte est surtout liée à la puissance de calcul des carte graphiques. Or, cette limite ne cesse d'être repoussée. En effet, les dernières carte de nVidia de la série RTX offrent une puissance de calcul encore jamais atteinte sur du matériel grand public ([puissance RTX 2080ti]). De plus, cette série a une particularité inédite : elle contient des coeurs de types RTX spécifiquement dédiés à la technologie du lancer de rayon. Utilisables dans une selection (limitée) de jeux, la présence de ces coeurs permet l'utilisation du lancer de rayon en temps réel. Si l'amélioration de la qualité de l'image est encore marginal, le pas technologique est en train d'être franchis, bien qu'il requiert encore une très grande performance de calcul.\\
+C'est dans ce contexte que j'ai proposé le sujet de ce projet:Implémenter le lancer de rayon en temps réel.\\
+Les objectifs sont les suivants :
+\begin{itemize}
+    \item Comprendre l'architecture d'un tel moteur afin de le développer
+    \item Observer l'impact des différents paramètres et calculs sur les performances
+    \item Implémenter des optimisations   
+\end{itemize}
+
+L'implémentation se fera sur en WebGL/GLSL, à travers la librairie EasyWebGL de M. THERY Sylvain. Nous utiliserons Blender Cycle comme moteur de référence pour comparer la qualité visuelle de notre moteur. 
+
+\section{notes}
+
+
+Sampling des lumières: le moteur utilise des point lights. Ces point lights ont une forme volumique sphérique
+
+\begin{lstlisting}
+struct PointLight
+{
+    vec3 position;
+    float radius;
+    vec3 color;
+    float intensity;
+}
+\end{lstlisting}
+    
+
+Sampling des lumières : Pour créer des soft shadow, à une intersection \(P\), on envoit \(n\) rayon vers la lumière que l'on souhaite echantillonner.  Ces points d'échantillonnage sont créés par echantillonnage uniforme sur la sphère. On test leur orientation en fonction du vecteur \(L\). Si le
+
+\end{document}
+
