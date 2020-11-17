@@ -1,3 +1,6 @@
+python3 -m http.server
+http://localhost:8000/index.html?RT_primary
+
 [Scratchpixel](https://www.scratchapixel.com)
 
 [Radeon-rays](https://gpuopen.com/gaming-product/radeon-rays/)
